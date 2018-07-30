@@ -1,0 +1,26 @@
+<html>
+<head>
+	<title>Register here!!</title>
+</head>
+<body>
+{% if message %}
+	{{message}}
+{% endif %}
+<br>
+<br>
+<form action="/register/" method="post">
+	Username :<input type="text" name="Username">
+	<br><br>
+	Password :<input type="password" name="Password">
+	<br><br>
+	Name :<input type="text" name="Name">
+	<br><br>
+	contact :<input type="text" name="contact">
+	<br><br>
+	Type :<input type="text" name="Type">
+	<br><br>
+	<input type="Submit" value="Click">
+	<br><br>
+	</form>
+</body>
+</html>

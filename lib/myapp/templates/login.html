@@ -1,0 +1,26 @@
+<html>
+<head>
+	<title>Login here!</title>
+
+</head>
+<body>
+
+	<br>
+{% if message %}
+	{{message}}
+{% endif %}
+<br>
+Login here!
+<br>
+<br>
+<form action="/login/" method="post">
+	<br><br>
+	Username :<input type="text" name="Username">
+	<br><br>
+	Password :<input type="password" name="Password">
+	<br><br>
+	<input type="Submit" value="Login">
+	<br><br>
+	</form>
+</body>
+</html>

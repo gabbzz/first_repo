@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Student Dashboard </title>
+
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/static/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/static/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="/static/vendor/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- DataTables CSS -->
+    <link href="/static/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="/static/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+
+
+</head>
+<body>
+  <div id="wrapper">
+<div>
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+
+  <div class="navbar-header">
+       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h2> Welcome Student</h2>
+  </div>
+  <ul class="nav navbar-top-links navbar-right">
+    <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="/profile/"><i class="fa fa-user fa-fw"></i> Profile</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="/logout/"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    </li>
+                    </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+
+<div class="navbar-default sidebar" role="navigation">
+
+  <div class="sidebar-nav navbar-collapse">
+
+     <ul class="nav" id="side-menu">
+
+
+      <li> <a href="/student_dashboard/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a> </li>
+
+      <li> <a href="#"><i class="fas fa-book"></i> Books</a> </li>
+
+
+     </ul>
+
+
+  </div>
+
+</div>
+
+<div id="page-wrapper">
+
+
+<br>
+<br>
+
+<div>
+  <table class="table table-striped table-bordered table-hover" id="table table-striped table-bordered table-hover">
+    <tr>
+
+      <th>
+        <h3> PICT LIBRARY BOOKS</h3>
+      </th>
+    <th align="centre">
+     <!-- <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">-->
+
+  <form action="/search/" method="POST">
+<label>Search:<input type="text" name="search" value="name/author/subject"><!--<input class="form-control input-sm" placeholder="" aria-controls="dataTables-example" type="search">--></label>
+ </form>
+    
+ 
+ <!--</div>-->
+</th>
+
+</tr>
+  </table>
+</div>
+
+<div>
+
+<table class="table table-striped table-bordered table-hover" id="table table-striped table-bordered table-hover">
+ 	
+<tr>
+ 	<th>Sr no.</th>
+    <th>name</th>
+    <th>author</th>
+    <th>subject</th>
+    <th> status </th>
+  </tr>
+
+{% for i in book_table %}  
+  <tr>
+  	<td>{{i.id}}</td>
+    <td><a href="/summary/?book_id= {{i.id}}"> <button>{{i.name}}</button></a></td> 
+    <td>{{i.author}}</td>
+    <td>{{i.subject}}</td>
+    <!-- <td>{{i.status}}</td> -->
+   <td> {%if i.status == 'available'%}
+        <a href="/issue/?book_id= {{i.id}} "><button type="button" class="btn btn-success" name="issued_book">ISSUE THIS BOOK</button></a> 
+
+        {% else %}
+
+        
+        <button type="button" class="btn btn-primary disabled">Unavailable</button>
+        </a>
+    
+     {% endif %} 
+</td>
+  </tr>
+ {% endfor %} 
+
+</table> 
+</div>
+    <!--table wala-->
+
+
+<div> <br>  <h3> MY HISTORY :</h3></div>
+
+
+<div>
+    <br>
+
+<table class="table table-striped table-bordered table-hover" id="table table-striped table-bordered table-hover">
+    
+<tr>
+    <!-- <th>Sr no.</th> -->
+    <th>Book</th>
+    <th>issue date</th>
+    <th>return date</th>
+    <th> status </th>
+  </tr>
+
+{% for i in book_history %}  
+  <tr>
+    <!-- <td>{{i}}</td> -->
+    <td>{{i.Book}}</td> 
+    <td>{{i.issue_date}}</td>
+    <td>{{i.return_date}}</td>
+    <td>{{i.status}}</td>
+   <!-- <td> {%if i.status == 'available'%}
+        <a href="/issue/?book_id= {{i.id}} "><button type="button" class="btn btn-success" name="issued_book">ISSUE THIS BOOK</button></a> 
+
+        {% else %}
+
+        
+        <button type="button" class="btn btn-primary disabled">Unavailable</button>
+        </a>
+    
+     {% endif %} 
+</td> -->
+  </tr>
+ {% endfor %} 
+
+</table> 
+
+
+
+</div>
+
+
+
+
+
+<!--
+
+                            <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="row"><div class="col-sm-6"><div class="dataTables_length" id="dataTables-example_length"><label>Show <select name="dataTables-example_length" aria-controls="dataTables-example" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-6"><div id="dataTables-example_filter" class="dataTables_filter"><label>Search:<input class="form-control input-sm" placeholder="" aria-controls="dataTables-example" type="search"></label></div></div></div><div class="row"><div class="col-sm-12"><table class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" id="dataTables-example" role="grid" aria-describedby="dataTables-example_info" style="width: 100%;" width="100%">
+                                <thead>
+                                    <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" style="width: 178.25px;" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Rendering engine</th><th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" style="width: 215.25px;" aria-label="Browser: activate to sort column ascending">Browser</th><th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" style="width: 198.25px;" aria-label="Platform(s): activate to sort column ascending">Platform(s)</th><th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" style="width: 154.25px;" aria-label="Engine version: activate to sort column ascending">Engine version</th><th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" style="width: 116px;" aria-label="CSS grade: activate to sort column ascending">CSS grade</th></tr>
+                                </thead>
+                                <tbody>
+                    
+                                <tr class="gradeA odd" role="row">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Firefox 1.0</td>
+                                        <td>Win 98+ / OSX.2+</td>
+                                        <td class="center">1.7</td>
+                                        <td class="center">A</td>
+                                    </tr><tr class="gradeA even" role="row">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Firefox 1.5</td>
+                                        <td>Win 98+ / OSX.2+</td>
+                                        <td class="center">1.8</td>
+                                        <td class="center">A</td>
+                                    </tr><tr class="gradeA odd" role="row">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Firefox 2.0</td>
+                                        <td>Win 98+ / OSX.2+</td>
+                                        <td class="center">1.8</td>
+                                        <td class="center">A</td>
+                                    </tr><tr class="gradeA even" role="row">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Firefox 3.0</td>
+                                        <td>Win 2k+ / OSX.3+</td>
+                                        <td class="center">1.9</td>
+                                        <td class="center">A</td>
+                                    </tr><tr class="gradeA odd" role="row">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Camino 1.0</td>
+                                        <td>OSX.2+</td>
+                                        <td class="center">1.8</td>
+                                        <td class="center">A</td>
+                                    </tr><tr class="gradeA even" role="row">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Camino 1.5</td>
+                                        <td>OSX.3+</td>
+                                        <td class="center">1.8</td>
+                                        <td class="center">A</td>
+                                    </tr><tr class="gradeA odd" role="row">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Netscape 7.2</td>
+                                        <td>Win 95+ / Mac OS 8.6-9.2</td>
+                                        <td class="center">1.7</td>
+                                        <td class="center">A</td>
+                                    </tr><tr class="gradeA even" role="row">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Netscape Browser 8</td>
+                                        <td>Win 98SE+</td>
+                                        <td class="center">1.7</td>
+                                        <td class="center">A</td>
+                                    </tr><tr class="gradeA odd" role="row">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Netscape Navigator 9</td>
+                                        <td>Win 98+ / OSX.2+</td>
+                                        <td class="center">1.8</td>
+                                        <td class="center">A</td>
+                                    </tr><tr class="gradeA even" role="row">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Mozilla 1.0</td>
+                                        <td>Win 95+ / OSX.1+</td>
+                                        <td class="center">1</td>
+                                        <td class="center">A</td>
+                                    </tr></tbody>
+                            </table></div></div><div class="row"><div class="col-sm-6"><div class="dataTables_info" id="dataTables-example_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div></div><div class="col-sm-6"><div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate"><ul class="pagination"><li class="paginate_button previous disabled" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous"><a href="#">Previous</a></li><li class="paginate_button active" aria-controls="dataTables-example" tabindex="0"><a href="#">1</a></li><li class="paginate_button " aria-controls="dataTables-example" tabindex="0"><a href="#">2</a></li><li class="paginate_button " aria-controls="dataTables-example" tabindex="0"><a href="#">3</a></li><li class="paginate_button " aria-controls="dataTables-example" tabindex="0"><a href="#">4</a></li><li class="paginate_button " aria-controls="dataTables-example" tabindex="0"><a href="#">5</a></li><li class="paginate_button " aria-controls="dataTables-example" tabindex="0"><a href="#">6</a></li><li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next"><a href="#">Next</a></li></ul></div></div></div></div>
+                            <!-- /.table-responsive 
+                           <div class="well">
+                                <h4>DataTables Usage Information</h4>
+                                <p>DataTables is a very flexible, advanced tables plugin for jQuery. In SB Admin, we are using a specialized version of DataTables built for Bootstrap 3. We have also customized the table headings to use Font Awesome icons in place of images. For complete documentation on DataTables, visit their website at <a target="_blank" href="https://datatables.net/">https://datatables.net/</a>.</p>
+                                <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View DataTables Documentation</a>
+                            </div>
+-->
+
+                        
+</div><!--data tables examples wala-->
+  
+</div>    <!--page wrapper-->
+
+</div>    <!-- wrapper wala-->
+
+<!--inorder to make the html page responsive.......displaying dropdowns etc etc-->
+<!-- jQuery -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/static/vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="/static/vendor/raphael/raphael.min.js"></script>
+    <script src="/static/vendor/morrisjs/morris.min.js"></script>
+    <script src="/static/data/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/static/dist/js/sb-admin-2.js"></script>
+
+
+    <!-- DataTables JavaScript -->
+    <script src="/static/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="/static/vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+</body>
+</html>
