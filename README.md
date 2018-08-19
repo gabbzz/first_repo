@@ -1,2 +1,4 @@
-# first_repo
-learning to use github
+# LIBRARY MANAGEMENT SYSTEM
+
+A python-django web application
+
